@@ -73,9 +73,6 @@ public class ImageManager implements IImageManager {
 		return groundImages[index];
 	}
 
-	public Image getHealthPickupImage() {
-		return getImage("/net/sf/robocode/ui/images/healthPickup.png");
-	}
 
 	public RenderImage getExplosionRenderImage(int which, int frame) {
 		if (explosionRenderImages == null) {
@@ -122,7 +119,7 @@ public class ImageManager implements IImageManager {
 		return debriseRenderImage;
 	}
 
-	private Image getImage(String filename) {
+	public Image getImage(String filename) {
 		Image image = ImageUtil.getImage(filename);
 
 		if (properties.getOptionsRenderingBufferImages()) {

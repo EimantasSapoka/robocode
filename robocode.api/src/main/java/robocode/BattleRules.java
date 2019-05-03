@@ -153,8 +153,16 @@ public final class BattleRules implements java.io.Serializable {
 
 		public BattleRules createRules(int battlefieldWidth, int battlefieldHeight, int numRounds, double gunCoolingRate, long inactivityTime, boolean hideEnemyNames, int sentryBorderSize) {
 			List<GroundItem> groundItems = new ArrayList<GroundItem>();
-			GroundItem health = new GroundItem(battlefieldWidth/2,battlefieldHeight/2, "Health");
+			GroundItem health = new GroundItem(battlefieldWidth/2,battlefieldHeight/2, GroundItem.GroundItemType.HEALTH);
 			groundItems.add(health);
+			GroundItem mine1 = new GroundItem(GroundItem.ITEM_SIZE_X, GroundItem.ITEM_SIZE_Y+20, GroundItem.GroundItemType.MINE);
+			GroundItem mine2 = new GroundItem(GroundItem.ITEM_SIZE_X, battlefieldHeight - (GroundItem.ITEM_SIZE_Y+20), GroundItem.GroundItemType.MINE);
+			GroundItem mine3 = new GroundItem(battlefieldWidth - GroundItem.ITEM_SIZE_X, GroundItem.ITEM_SIZE_Y+20, GroundItem.GroundItemType.MINE);
+			GroundItem mine4 = new GroundItem(battlefieldWidth - GroundItem.ITEM_SIZE_X, battlefieldHeight - (GroundItem.ITEM_SIZE_Y+20), GroundItem.GroundItemType.MINE);
+			groundItems.add(mine1);
+			groundItems.add(mine2);
+			groundItems.add(mine3);
+			groundItems.add(mine4);
 			return new BattleRules(battlefieldWidth, battlefieldHeight, numRounds, gunCoolingRate, inactivityTime,
 					hideEnemyNames, sentryBorderSize, groundItems);
 		}

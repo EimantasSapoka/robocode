@@ -8,6 +8,7 @@
 package net.sf.robocode.ui.battleview;
 
 
+import net.sf.robocode.battle.peer.GroundItemPeer;
 import net.sf.robocode.battle.snapshot.RobotSnapshot;
 import net.sf.robocode.robotpaint.Graphics2DSerialized;
 import net.sf.robocode.robotpaint.IGraphicsProxy;
@@ -20,6 +21,7 @@ import net.sf.robocode.ui.gfx.GraphicsState;
 import net.sf.robocode.ui.gfx.RenderImage;
 import net.sf.robocode.ui.gfx.RobocodeLogo;
 import robocode.BattleRules;
+import robocode.GroundItem;
 import robocode.control.events.BattleAdaptor;
 import robocode.control.events.BattleFinishedEvent;
 import robocode.control.events.BattleStartedEvent;
@@ -347,10 +349,11 @@ public class BattleView extends Canvas {
 			x = groundItemSnapshot.getPaintX();
 			y = battleField.getHeight() - groundItemSnapshot.getPaintY();
 
-			if (groundItemSnapshot.getState().isActive()) {
+			GroundItemPeer state = groundItemSnapshot.getState();
+			if (state.isActive()) {
 
-				Image healthPickupImage = imageManager.getHealthPickupImage();
-				g.drawImage(healthPickupImage, (int)x , (int)y,32,32, null);
+				Image healthPickupImage = state.getImage();
+				g.drawImage(healthPickupImage, (int)x , (int)y,GroundItem.ITEM_SIZE_X,GroundItem.ITEM_SIZE_Y, null);
 
 			}
 		}

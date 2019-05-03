@@ -22,7 +22,8 @@ public class GroundItemSnapshot implements IGroundItemSnapshot {
     }
 
     @Override
-    public GroundItem getState() {
-        return groundItem.getGroundItem();
+    public GroundItemPeer getState() {
+        return groundItem;
     }
+
 }

@@ -75,7 +75,7 @@ public class Interactive_v2 extends AdvancedRobot {
 		RIGHT
 	}
 	public void onStatus(StatusEvent e) {
-		e.getStatus().getGroundItems().stream().map(item -> item.getName()).forEach(item -> System.out.println(item));
+		e.getStatus().getGroundItems().stream().map(item -> item.getType().getName()).forEach(item -> System.out.println(item));
 	}
 	// Current move directions
 	private final Set<Direction> directions = new HashSet<Direction>();

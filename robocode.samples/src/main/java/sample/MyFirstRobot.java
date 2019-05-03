@@ -35,7 +35,7 @@ public class MyFirstRobot extends Robot {
 		}
 	}
 	public void onStatus(StatusEvent e) {
-		e.getStatus().getGroundItems().stream().map(item -> item.getName()).forEach(item -> System.out.println(item));
+		e.getStatus().getGroundItems().stream().map(item -> item.getType().getName()).forEach(item -> System.out.println(item));
 	}
 
 	/**

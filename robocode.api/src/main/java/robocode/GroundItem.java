@@ -1,22 +1,42 @@
 package robocode;
 
-import java.awt.geom.Line2D;
 
 public class GroundItem {
 
+    public enum GroundItemType {
+        HEALTH ("Health pickup", "Increases health by 50"),
+        MINE ("Mine", "Deals 25 damage");
+
+        private final String description;
+        private final String name;
+
+        GroundItemType(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    public static final int ITEM_SIZE_X = 35;
+    public static final int ITEM_SIZE_Y = 35;
     private final double x;
     private final double y;
     private boolean active;
-    private final String name;
-    private final Line2D.Double boundingLine = new Line2D.Double();
+    private final GroundItemType type;
 
 
-    public GroundItem(double x, double y, String name) {
+    public GroundItem(double x, double y, GroundItemType type) {
         this.x = x;
         this.y = y;
-        this.name = name;
+        this.type = type;
         active = true;
-        boundingLine.setLine(x, y, 35, 35);
     }
 
     public double getX() {
@@ -27,8 +47,8 @@ public class GroundItem {
         return y;
     }
 
-    public String getName() {
-        return name;
+    public GroundItemType getType() {
+        return type;
     }
 
     public boolean isActive() {

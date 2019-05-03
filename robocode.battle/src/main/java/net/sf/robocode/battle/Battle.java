@@ -96,7 +96,7 @@ public final class Battle extends BaseBattle {
 		robotsCount = battlingRobotsList.length;
 		computeInitialPositions(battleProps.getInitialPositions());
 		createPeers(battlingRobotsList);
-		groundItemPeers = battleRules.getGroundItems().stream().map(item -> new GroundItemPeer(item)).collect(Collectors.toList());
+		groundItemPeers = battleRules.getGroundItems().stream().map(item -> GroundItemPeerFactory.createGroundItemPeer(item)).collect(Collectors.toList());
 	}
 
 	private void createPeers(RobotSpecification[] battlingRobotsList) {
