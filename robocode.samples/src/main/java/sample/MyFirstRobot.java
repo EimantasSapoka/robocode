@@ -11,6 +11,7 @@ package sample;
 import robocode.HitByBulletEvent;
 import robocode.Robot;
 import robocode.ScannedRobotEvent;
+import robocode.StatusEvent;
 
 
 /**
@@ -26,13 +27,15 @@ public class MyFirstRobot extends Robot {
 	 * MyFirstRobot's run method - Seesaw
 	 */
 	public void run() {
-
 		while (true) {
 			ahead(100); // Move ahead 100
 			turnGunRight(360); // Spin gun around
 			back(100); // Move back 100
 			turnGunRight(360); // Spin gun around
 		}
+	}
+	public void onStatus(StatusEvent e) {
+		e.getStatus().getGroundItems().stream().map(item -> item.getName()).forEach(item -> System.out.println(item));
 	}
 
 	/**

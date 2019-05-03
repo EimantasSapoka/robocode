@@ -107,6 +107,11 @@ public class JuniorEvents implements IJuniorRobot, IBasicEvents, Runnable {
 		out.println("last bullet heading " + bullet.getHeadingRadians());
 	}
 
+	@Override
+	public void onGroundItemPickup(GroundITemPickupEvent event) {
+
+	}
+
 	public void onScannedRobot(ScannedRobotEvent event) {
 		count(event);
 

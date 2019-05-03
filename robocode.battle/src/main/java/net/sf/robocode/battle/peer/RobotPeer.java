@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 
 /**
@@ -800,10 +801,11 @@ public final class RobotPeer implements IRobotPeerBattle, IRobotPeer {
 		int others = battle.countActiveParticipants() - (isAlive() ? 1 : 0);
 		int numSentries = battle.countActiveSentries();
 
+		List<GroundItem> groundItems = battle.getGroundItems().stream().map(item -> item.getGroundItem()).collect(Collectors.toList());
 		RobotStatus stat = HiddenAccess.createStatus(energy, x, y, bodyHeading, gunHeading, radarHeading, velocity,
 				currentCommands.getBodyTurnRemaining(), currentCommands.getRadarTurnRemaining(),
 				currentCommands.getGunTurnRemaining(), currentCommands.getDistanceRemaining(), gunHeat, others, numSentries,
-				battle.getRoundNum(), battle.getNumRounds(), battle.getTime());
+				battle.getRoundNum(), battle.getNumRounds(), battle.getTime(), groundItems);
 
 		status.set(stat);
 		robotProxy.startRound(currentCommands, stat);
@@ -1440,6 +1442,8 @@ public final class RobotPeer implements IRobotPeerBattle, IRobotPeer {
 			y += velocity * cos(bodyHeading);
 			updateBoundingBox();
 		}
+
+		// check collision with ground items
 	}
 
 	private double getDistanceTraveledUntilStop(double velocity) {
@@ -1622,7 +1626,7 @@ public final class RobotPeer implements IRobotPeerBattle, IRobotPeer {
 		logMessage(message.toString());
 	}
 
-	void updateEnergy(double delta) {
+	public void updateEnergy(double delta) {
 		if ((!isExecFinishedAndDisabled && !isEnergyDrained) || delta < 0) {
 			setEnergy(energy + delta, true);
 		}
@@ -1730,10 +1734,13 @@ public final class RobotPeer implements IRobotPeerBattle, IRobotPeer {
 		int others = battle.countActiveParticipants() - (isDead() || isSentryRobot() ? 0 : 1);
 		int numSentries = battle.countActiveSentries();
 
+		List<GroundItemPeer> groundItemPeers = battle.getGroundItems();
+		List<GroundItem> groundItems = groundItemPeers.stream().map(item -> item.getGroundItem()).collect(Collectors.toList());
+
 		RobotStatus stat = HiddenAccess.createStatus(energy, x, y, bodyHeading, gunHeading, radarHeading, velocity,
 				currentCommands.getBodyTurnRemaining(), currentCommands.getRadarTurnRemaining(),
 				currentCommands.getGunTurnRemaining(), currentCommands.getDistanceRemaining(), gunHeat, others, numSentries,
-				battle.getRoundNum(), battle.getNumRounds(), battle.getTime());
+				battle.getRoundNum(), battle.getNumRounds(), battle.getTime(), groundItems);
 
 		status.set(stat);
 	}

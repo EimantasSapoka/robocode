@@ -739,6 +739,11 @@ public class Robot extends _Robot implements IInteractiveRobot, IPaintRobot, IBa
 	 */
 	public void onWin(WinEvent event) {}
 
+	@Override
+	public void onGroundItemPickup(GroundITemPickupEvent event) {
+
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

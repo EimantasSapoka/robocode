@@ -206,7 +206,7 @@ public class FileUtil {
 	 * @return a File that is the directory containing the robots
 	 */
 	public static File getRobotsDir() {
-		String robotPath = System.getProperty("ROBOTPATH");
+		String robotPath = "D:\\Workspace\\robocode\\robocode.samples\\target\\classes";
 		File file;
 
 		if (robotPath != null) {

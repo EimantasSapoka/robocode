@@ -90,6 +90,11 @@ public class AlienComposition implements IBasicRobot {
 		public void onRobotDeath(RobotDeathEvent e) {}
 
 		public void onWin(WinEvent e) {}
+
+		@Override
+		public void onGroundItemPickup(GroundITemPickupEvent event) {
+
+		}
 	}
 }
 

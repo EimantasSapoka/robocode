@@ -79,4 +79,9 @@ public class Alien implements IBasicEvents, IBasicRobot, Runnable {
 	public void onRobotDeath(RobotDeathEvent e) {}
 
 	public void onWin(WinEvent e) {}
+
+	@Override
+	public void onGroundItemPickup(GroundITemPickupEvent event) {
+
+	}
 }

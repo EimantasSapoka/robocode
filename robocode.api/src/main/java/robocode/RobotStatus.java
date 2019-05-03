@@ -14,6 +14,8 @@ import net.sf.robocode.serialization.RbSerializer;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -44,6 +46,7 @@ public final class RobotStatus implements Serializable {
 	private final int roundNum;
 	private final int numRounds;
 	private final long time;
+	private final List<GroundItem> groundItems;
 
 	/**
 	 * Returns the robot's current energy.
@@ -314,6 +317,10 @@ public final class RobotStatus implements Serializable {
 		return numRounds;
 	}
 
+	public List<GroundItem> getGroundItems() {
+		return groundItems;
+	}
+
 	/**
 	 * Returns the current round number (0 to {@link #getNumRounds()} - 1) of
 	 * the battle.
@@ -338,7 +345,7 @@ public final class RobotStatus implements Serializable {
 
 	private RobotStatus(double energy, double x, double y, double bodyHeading, double gunHeading, double radarHeading,
 			double velocity, double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining,
-			double distanceRemaining, double gunHeat, int others, int numSentries, int roundNum, int numRounds, long time) {
+			double distanceRemaining, double gunHeat, int others, int numSentries, int roundNum, int numRounds, long time, List<GroundItem> groundItems) {
 		this.energy = energy;
 		this.x = x;
 		this.y = y;
@@ -356,6 +363,7 @@ public final class RobotStatus implements Serializable {
 		this.roundNum = roundNum;
 		this.numRounds = numRounds;
 		this.time = time;
+		this.groundItems = groundItems;
 	}
 
 	static ISerializableHelper createHiddenSerializer() {
@@ -408,18 +416,17 @@ public final class RobotStatus implements Serializable {
 			int roundNum = buffer.getInt();
 			int numRounds = buffer.getInt();
 			long time = buffer.getLong();
-
 			return new RobotStatus(energy, x, y, bodyHeading, gunHeading, radarHeading, velocity, bodyTurnRemaining,
 					radarTurnRemaining, gunTurnRemaining, distanceRemaining, gunHeat, others, numSentries, roundNum, numRounds,
-					time);
+					time, new ArrayList<GroundItem>());
 		}
 
 		public RobotStatus createStatus(double energy, double x, double y, double bodyHeading, double gunHeading, double radarHeading, double velocity,
 				double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining, double distanceRemaining, double gunHeat, int others,
-				int numSentries, int roundNum, int numRounds, long time) {
+				int numSentries, int roundNum, int numRounds, long time, List<GroundItem> groundItems) {
 			return new RobotStatus(energy, x, y, bodyHeading, gunHeading, radarHeading, velocity, bodyTurnRemaining,
 					radarTurnRemaining, gunTurnRemaining, distanceRemaining, gunHeat, others, numSentries, roundNum, numRounds,
-					time);
+					time, groundItems);
 		}
 	}
 

@@ -11,10 +11,8 @@ package net.sf.robocode.security;
 import net.sf.robocode.core.ContainerBase;
 import net.sf.robocode.io.Logger;
 import net.sf.robocode.peer.IRobotStatics;
-import robocode.BattleRules;
-import robocode.Bullet;
+import robocode.*;
 import robocode.Event;
-import robocode.RobotStatus;
 import robocode.control.RobotSpecification;
 import robocode.control.events.IBattleListener;
 import robocode.robotinterfaces.IBasicRobot;
@@ -228,11 +226,11 @@ public class HiddenAccess {
 	}
 
 	public static RobotStatus createStatus(double energy, double x, double y, double bodyHeading, double gunHeading, double radarHeading, double velocity,
-			double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining, double distanceRemaining, double gunHeat, int others,
-			int numSentries, int roundNum, int numRounds, long time) {
+										   double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining, double distanceRemaining, double gunHeat, int others,
+										   int numSentries, int roundNum, int numRounds, long time, java.util.List<GroundItem> groundItemList) {
 		return statusHelper.createStatus(energy, x, y, bodyHeading, gunHeading, radarHeading, velocity,
 				bodyTurnRemaining, radarTurnRemaining, gunTurnRemaining, distanceRemaining, gunHeat, others, numSentries,
-				roundNum, numRounds, time);
+				roundNum, numRounds, time, groundItemList);
 	}
 
 	public static BattleRules createRules(int battlefieldWidth, int battlefieldHeight, int numRounds, double gunCoolingRate, long inactivityTime, boolean hideEnemyNames, int sentryBorderSize) {

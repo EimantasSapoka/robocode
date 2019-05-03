@@ -275,4 +275,6 @@ public interface IBasicEvents {
 	 * @see Event
 	 */
 	void onWin(WinEvent event);
+
+	void onGroundItemPickup(GroundITemPickupEvent event);
 }

@@ -10,6 +10,7 @@ package net.sf.robocode.battle.snapshot;
 
 import net.sf.robocode.battle.Battle;
 import net.sf.robocode.battle.peer.BulletPeer;
+import net.sf.robocode.battle.peer.GroundItemPeer;
 import net.sf.robocode.battle.peer.RobotPeer;
 import net.sf.robocode.serialization.IXmlSerializable;
 import net.sf.robocode.serialization.XmlReader;
@@ -33,6 +34,7 @@ import java.util.*;
 public final class TurnSnapshot implements java.io.Serializable, IXmlSerializable, ITurnSnapshot {
 
 	private static final long serialVersionUID = 1L;
+	private  List<IGroundItemSnapshot> groundItems;
 
 	/** List of snapshots for the robots participating in the battle */
 	private List<IRobotSnapshot> robots;
@@ -66,6 +68,7 @@ public final class TurnSnapshot implements java.io.Serializable, IXmlSerializabl
 	public TurnSnapshot(Battle battle, List<RobotPeer> battleRobots, List<BulletPeer> battleBullets, boolean readoutText) {
 		robots = new ArrayList<IRobotSnapshot>();
 		bullets = new ArrayList<IBulletSnapshot>();
+		groundItems = new ArrayList<IGroundItemSnapshot>();
 
 		for (RobotPeer robotPeer : battleRobots) {
 			robots.add(new RobotSnapshot(robotPeer, readoutText));
@@ -73,6 +76,11 @@ public final class TurnSnapshot implements java.io.Serializable, IXmlSerializabl
 
 		for (BulletPeer bulletPeer : battleBullets) {
 			bullets.add(new BulletSnapshot(bulletPeer));
+		}
+
+		for (GroundItemPeer groundItem : battle.getGroundItems()) {
+
+			groundItems.add(new GroundItemSnapshot(groundItem));
 		}
 
 		tps = battle.getTPS();
@@ -162,6 +170,12 @@ public final class TurnSnapshot implements java.io.Serializable, IXmlSerializabl
 		}
 
 		return scores.toArray(new IScoreSnapshot[scores.size()]);
+	}
+
+	@Override
+	public IGroundItemSnapshot[] getGroundItems() {
+		return groundItems.toArray(new IGroundItemSnapshot[groundItems.size()]);
+
 	}
 
 	public void stripDetails(SerializableOptions options) {

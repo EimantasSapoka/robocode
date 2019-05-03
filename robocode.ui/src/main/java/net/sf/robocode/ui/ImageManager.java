@@ -73,6 +73,10 @@ public class ImageManager implements IImageManager {
 		return groundImages[index];
 	}
 
+	public Image getHealthPickupImage() {
+		return getImage("/net/sf/robocode/ui/images/healthPickup.png");
+	}
+
 	public RenderImage getExplosionRenderImage(int which, int frame) {
 		if (explosionRenderImages == null) {
 			int numExplosion, numFrame;

@@ -885,6 +885,11 @@ public class JuniorRobot extends _RobotBase implements IJuniorRobot {
 
 		public void onWin(WinEvent event) {}
 
+		@Override
+		public void onGroundItemPickup(GroundITemPickupEvent event) {
+
+		}
+
 		public void run() {
 			fieldWidth = (int) (peer.getBattleFieldWidth() + 0.5);
 			fieldHeight = (int) (peer.getBattleFieldHeight() + 0.5);

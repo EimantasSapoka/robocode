@@ -9,6 +9,7 @@ package sample;
 
 
 import robocode.AdvancedRobot;
+import robocode.StatusEvent;
 import robocode.util.Utils;
 import static robocode.util.Utils.normalAbsoluteAngle;
 import static robocode.util.Utils.normalRelativeAngle;
@@ -73,7 +74,9 @@ public class Interactive_v2 extends AdvancedRobot {
 		LEFT,
 		RIGHT
 	}
-
+	public void onStatus(StatusEvent e) {
+		e.getStatus().getGroundItems().stream().map(item -> item.getName()).forEach(item -> System.out.println(item));
+	}
 	// Current move directions
 	private final Set<Direction> directions = new HashSet<Direction>();
 

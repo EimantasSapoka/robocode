@@ -25,6 +25,7 @@ import robocode.control.events.BattleFinishedEvent;
 import robocode.control.events.BattleStartedEvent;
 import robocode.control.events.TurnEndedEvent;
 import robocode.control.snapshot.IBulletSnapshot;
+import robocode.control.snapshot.IGroundItemSnapshot;
 import robocode.control.snapshot.IRobotSnapshot;
 import robocode.control.snapshot.ITurnSnapshot;
 
@@ -69,6 +70,7 @@ public class BattleView extends Canvas {
 	private final int groundTileHeight = 64;
 
 	private Image groundImage;
+	private Image healthItemImage;
 
 	// Draw option related things
 	private boolean drawRobotName;
@@ -308,6 +310,8 @@ public class BattleView extends Canvas {
 		drawGround(g);
 
 		if (snapShot != null) {
+			drawGroundItems(g, snapShot);
+
 			// Draw scan arcs
 			drawScanArcs(g, snapShot);
 
@@ -327,10 +331,29 @@ public class BattleView extends Canvas {
 
 			// Draw all text
 			drawText(g, snapShot);
+
 		}
 
 		// Restore the graphics state
 		graphicsState.restore(g);
+	}
+
+	private void drawGroundItems(Graphics2D g, ITurnSnapshot snapShot) {
+
+
+		double x, y;
+
+		for (IGroundItemSnapshot groundItemSnapshot : snapShot.getGroundItems()) {
+			x = groundItemSnapshot.getPaintX();
+			y = battleField.getHeight() - groundItemSnapshot.getPaintY();
+
+			if (groundItemSnapshot.getState().isActive()) {
+
+				Image healthPickupImage = imageManager.getHealthPickupImage();
+				g.drawImage(healthPickupImage, (int)x , (int)y,32,32, null);
+
+			}
+		}
 	}
 
 	private void drawGround(Graphics2D g) {

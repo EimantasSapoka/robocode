@@ -8,11 +8,9 @@
 package net.sf.robocode.battle;
 
 
+import net.sf.robocode.battle.peer.GroundItemPeer;
 import net.sf.robocode.battle.events.BattleEventDispatcher;
-import net.sf.robocode.battle.peer.BulletPeer;
-import net.sf.robocode.battle.peer.ContestantPeer;
-import net.sf.robocode.battle.peer.RobotPeer;
-import net.sf.robocode.battle.peer.TeamPeer;
+import net.sf.robocode.battle.peer.*;
 import net.sf.robocode.battle.snapshot.TurnSnapshot;
 import net.sf.robocode.host.ICpuManager;
 import net.sf.robocode.host.IHostManager;
@@ -35,6 +33,7 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 /**
@@ -80,6 +79,7 @@ public final class Battle extends BaseBattle {
 
 	// Initial robot setups (if any)
 	private RobotSetup[] initialRobotSetups;
+	private List<GroundItemPeer> groundItemPeers;
 
 	public Battle(ISettingsManager properties, IBattleManager battleManager, IHostManager hostManager, ICpuManager cpuManager, BattleEventDispatcher eventDispatcher) { // NO_UCD (unused code)
 		super(
@@ -96,6 +96,7 @@ public final class Battle extends BaseBattle {
 		robotsCount = battlingRobotsList.length;
 		computeInitialPositions(battleProps.getInitialPositions());
 		createPeers(battlingRobotsList);
+		groundItemPeers = battleRules.getGroundItems().stream().map(item -> new GroundItemPeer(item)).collect(Collectors.toList());
 	}
 
 	private void createPeers(RobotSpecification[] battlingRobotsList) {
@@ -413,6 +414,8 @@ public final class Battle extends BaseBattle {
 
 		loadCommands();
 
+		updateGroundItems();
+
 		updateBullets();
 
 		updateRobots();
@@ -432,6 +435,8 @@ public final class Battle extends BaseBattle {
 		// Robot time!
 		wakeupRobots();
 	}
+
+
 
 	@Override
 	protected void shutdownTurn() {
@@ -574,6 +579,14 @@ public final class Battle extends BaseBattle {
 			bullet.update(getRobotsAtRandom(), getBulletsAtRandom());
 			if (bullet.getState() == BulletState.INACTIVE) {
 				bullets.remove(bullet);
+			}
+		}
+	}
+
+	private void updateGroundItems() {
+		for (GroundItemPeer item : getGroundItems()) {
+			if (item.isActive()) {
+				item.update(getRobotsAtRandom());
 			}
 		}
 	}
@@ -829,7 +842,11 @@ public final class Battle extends BaseBattle {
 		sendCommand(new SendInteractiveEventCommand(e));
 	}
 
-	private class KillRobotCommand extends RobotCommand {
+	public List<GroundItemPeer> getGroundItems() {
+		return groundItemPeers;
+	}
+
+    private class KillRobotCommand extends RobotCommand {
 		KillRobotCommand(int robotIndex) {
 			super(robotIndex);
 		}

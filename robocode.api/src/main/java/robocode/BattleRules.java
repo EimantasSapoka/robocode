@@ -10,6 +10,9 @@ package robocode;
 
 import net.sf.robocode.security.IHiddenRulesHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Contains the battle rules returned by {@link robocode.control.events.BattleStartedEvent#getBattleRules()
@@ -35,6 +38,13 @@ public final class BattleRules implements java.io.Serializable {
 	private final long inactivityTime;
 	private final boolean hideEnemyNames;
 	private final int sentryBorderSize;
+	private final List<GroundItem> groundItems;
+
+
+	public List<GroundItem> getGroundItems() {
+		return groundItems;
+	}
+
 
 	/**
 	 * Returns the battlefield width.
@@ -124,7 +134,7 @@ public final class BattleRules implements java.io.Serializable {
 	}
 	
 	private BattleRules(int battlefieldWidth, int battlefieldHeight, int numRounds, double gunCoolingRate,
-			long inactivityTime, boolean hideEnemyNames, int sentryBorderSize) {
+						long inactivityTime, boolean hideEnemyNames, int sentryBorderSize, List<GroundItem> groundItems) {
 		this.battlefieldWidth = battlefieldWidth;
 		this.battlefieldHeight = battlefieldHeight;
 		this.numRounds = numRounds;
@@ -132,6 +142,7 @@ public final class BattleRules implements java.io.Serializable {
 		this.inactivityTime = inactivityTime;
 		this.hideEnemyNames = hideEnemyNames;
 		this.sentryBorderSize = sentryBorderSize;
+		this.groundItems = groundItems;
 	}
 
 	static IHiddenRulesHelper createHiddenHelper() {
@@ -141,8 +152,11 @@ public final class BattleRules implements java.io.Serializable {
 	private static class HiddenHelper implements IHiddenRulesHelper {
 
 		public BattleRules createRules(int battlefieldWidth, int battlefieldHeight, int numRounds, double gunCoolingRate, long inactivityTime, boolean hideEnemyNames, int sentryBorderSize) {
+			List<GroundItem> groundItems = new ArrayList<GroundItem>();
+			GroundItem health = new GroundItem(battlefieldWidth/2,battlefieldHeight/2, "Health");
+			groundItems.add(health);
 			return new BattleRules(battlefieldWidth, battlefieldHeight, numRounds, gunCoolingRate, inactivityTime,
-					hideEnemyNames, sentryBorderSize);
+					hideEnemyNames, sentryBorderSize, groundItems);
 		}
 	}
 }

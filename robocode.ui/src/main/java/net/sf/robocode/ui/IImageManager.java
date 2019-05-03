@@ -21,6 +21,8 @@ public interface IImageManager {
 
 	Image getGroundTileImage(int index);
 
+	Image getHealthPickupImage();
+
 	RenderImage getExplosionRenderImage(int which, int frame);
 
 	RenderImage getExplosionDebriseRenderImage();

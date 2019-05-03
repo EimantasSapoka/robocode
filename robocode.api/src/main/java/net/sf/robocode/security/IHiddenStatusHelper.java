@@ -8,7 +8,10 @@
 package net.sf.robocode.security;
 
 
+import robocode.GroundItem;
 import robocode.RobotStatus;
+
+import java.util.List;
 
 
 /**
@@ -17,6 +20,6 @@ import robocode.RobotStatus;
  */
 public interface IHiddenStatusHelper {
 	RobotStatus createStatus(double energy, double x, double y, double bodyHeading, double gunHeading, double radarHeading,
-			double velocity, double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining,
-			double distanceRemaining, double gunHeat, int others, int numSentries, int roundNum, int numRounds, long time);
+							 double velocity, double bodyTurnRemaining, double radarTurnRemaining, double gunTurnRemaining,
+							 double distanceRemaining, double gunHeat, int others, int numSentries, int roundNum, int numRounds, long time, List<GroundItem> groundItemList);
 }
